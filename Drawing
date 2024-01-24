@@ -1,0 +1,38 @@
+clear
+clc
+m=2;
+b=0.67;
+az = 0.9;
+ar = 0.9; 
+Z=[0.1:0.1:9];
+Y= [-2:0.1:2];
+
+[z,y]=meshgrid(Z,Y);
+%
+%{
+%plot gaussian distribution
+g=exp(-z.^2/az^2-y.^2/ar^2);
+figure
+sc = surfc(z,y,g);
+sc(2).ZLocation = 'zmax';
+
+figure
+%plot poission distribution
+p = ((z.^m)/factorial(m)).*exp(-z);
+sc2 = surfc(z,y,p);
+sc2(2).ZLocation = 'zmax';
+%}
+
+%plot modified poisson-gaussian function
+pg = ((b*z).^m).*exp(-b*z-z.^2/az^2-y.^2/ar^2); 
+sc3 = surfc(z,y,pg);
+sc3(2).ZLocation = 'zmax';
+
+
+%plot poisson-gaussian function
+pg = ((b*z).^m).*exp(-z-z.^2/az^2-y.^2/ar^2); 
+sc3 = surfc(z,y,pg);
+sc3(2).ZLocation = 'zmax';
+
+colorbar
+shading interp
